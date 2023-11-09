@@ -1,5 +1,8 @@
+import 'package:bookstore/UI/widgets/error_dialog.dart';
+import 'package:bookstore/model/objects/registration_request.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/model.dart';
 import '../../model/supports/constants.dart';
 
 class Registrazione extends StatelessWidget {
@@ -10,6 +13,12 @@ class Registrazione extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  bool checkTextFields() {
+    return (firstNameController.text!="" && lastNameController.text!=""
+        && emailController.text!="" && addressController.text!=""
+        && phoneController.text!="" && passwordController.text!="");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,8 +138,33 @@ class Registrazione extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orangeAccent,
                     ),
-                    onPressed: () {
-                      // Implementare la logica di registrazione
+                    onPressed: () async {
+                      if(checkTextFields()) {
+                        RegistrationRequest r = RegistrationRequest(
+                            firstName: firstNameController.text,
+                            lastName: lastNameController.text,
+                            email: emailController.text,
+                            address: addressController.text,
+                            phone: phoneController.text,
+                            password: passwordController.text
+                        );
+                        try {
+                          await Model.sharedInstance.register(r);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Registrazione effettuata con successo. Effettua il login.'),
+                            ),
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.toString()),
+                            ),
+                          );
+                        }
+                      } else {
+                        showErrorDialog(context, "Inserisci i dati mancanti");
+                      }
                     },
                     child: const Text(
                       "Registrati",
@@ -147,4 +181,5 @@ class Registrazione extends StatelessWidget {
       ),
     );
   }
+
 }
