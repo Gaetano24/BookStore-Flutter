@@ -16,6 +16,25 @@ class Model {
   AuthenticationData? _authenticationData;
   String? _token;
 
+  Future<void> register(RegistrationRequest registrationRequest) async {
+    const String url = "${Constants.addressStoreServer}/register";
+    final Map<String, dynamic> requestBody = registrationRequest.toJson();
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(requestBody),
+      );
+      if (response.statusCode != 201) {
+        throw Exception(response.body);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   Future<LoginResult> login(String email, String password) async {
     final Map<String, String> body = {
       'grant_type': 'password',
@@ -313,40 +332,17 @@ class Model {
     }
   }
 
-  Future<void> checkout(List<CartDetail> cartDetails) async {
+  Future<void> checkout() async {
     final url = Uri.parse(
         "${Constants.addressStoreServer}/profile/cart/checkout");
-    final Map<String, dynamic> requestBody = {
-      'cartDetails': cartDetails.map((detail) => detail.toJson()).toList(),
-    };
     try {
       final response = await http.post(
         url,
         headers: <String, String>{
           'Authorization': 'Bearer $_token',
         },
-        body: jsonEncode(requestBody),
       );
-      if (response.statusCode != 201) {
-        throw Exception(response.body);
-      }
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
-  Future<void> register(RegistrationRequest registrationRequest) async {
-    const String url = "${Constants.addressStoreServer}/register";
-    final Map<String, dynamic> requestBody = registrationRequest.toJson();
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(requestBody),
-      );
-      if (response.statusCode != 201) {
+      if(response.statusCode != 201) {
         throw Exception(response.body);
       }
     } catch (e) {

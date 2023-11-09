@@ -2,6 +2,7 @@ import 'package:bookstore/UI/pages/registrazione.dart';
 import 'package:bookstore/UI/pages/ricerca_avanzata.dart';
 import 'package:flutter/material.dart';
 import '../../model/supports/constants.dart';
+import 'carrello.dart';
 import 'home.dart';
 import 'login.dart';
 
@@ -47,7 +48,7 @@ class _LayoutState extends State<Layout> {
                   const RicercaAvanzata(),
                   const Login(),
                   Registrazione(),
-                  //Carrello()
+                  const Carrello()
                 ]
             )
         )
