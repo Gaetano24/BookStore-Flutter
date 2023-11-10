@@ -275,7 +275,11 @@ class _CarrelloState extends State<Carrello> {
     } else {
       return const Scaffold(
         body: Center(
-            child: Text("Effettua il login per accedere al carrello")),
+            child: Text("Effettua il login per accedere al carrello",
+              style: TextStyle(
+                fontSize: 20
+              )
+            )),
       );
     }
   }

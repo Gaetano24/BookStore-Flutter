@@ -12,7 +12,7 @@ class BookCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.grey.shade300,
+      color: Colors.grey.shade200,
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,6 +56,7 @@ class BookCard extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
+                  elevation: 5,
                   backgroundColor: Colors.orangeAccent,
                 ),
                 child: const Text('Aggiungi al carrello',
