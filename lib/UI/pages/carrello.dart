@@ -159,7 +159,7 @@ class _CarrelloState extends State<Carrello> {
                                     setState(() {
                                       item.quantity -= 1;
                                       item.subTotal =
-                                          item.quantity * item.price;
+                                          item.quantity * item.book.price;
                                     });
                                   } catch (e) {
                                     showErrorDialog(context, e.toString());
@@ -181,7 +181,7 @@ class _CarrelloState extends State<Carrello> {
                                   setState(() {
                                     item.quantity += 1;
                                     item.subTotal =
-                                        item.quantity * item.price;
+                                        item.quantity * item.book.price;
                                   });
                                 } catch (e) {
                                   showErrorDialog(
