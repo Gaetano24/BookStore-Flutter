@@ -114,10 +114,9 @@ class _CarrelloState extends State<Carrello> {
                   onPressed: () async {
                     try {
                       await Model.sharedInstance.removeItem(item.id);
-                      setState(() {
-                        cartDetails.remove(item);
-                      });
+                      fetchCartDetails();
                     } catch (e) {
+                      fetchCartDetails();
                       showErrorDialog(context, e.toString());
                     }
                   },
@@ -129,7 +128,7 @@ class _CarrelloState extends State<Carrello> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(item.book.title),
-                        Text("Prezzo: ${item.price}€",
+                        Text("Prezzo: ${item.book.price}€",
                             style: const TextStyle(fontSize: 14)),
                       ],
                     ),
@@ -144,10 +143,9 @@ class _CarrelloState extends State<Carrello> {
                                   try {
                                     await Model.sharedInstance
                                         .removeItem(item.id);
-                                    setState(() {
-                                      cartDetails.remove(item);
-                                    });
+                                    fetchCartDetails();
                                   } catch (e) {
+                                    fetchCartDetails();
                                     showErrorDialog(context, e.toString());
                                   }
                                 } else {
@@ -156,12 +154,9 @@ class _CarrelloState extends State<Carrello> {
                                     await Model.sharedInstance
                                         .updateItemQuantity(
                                         item.id, quantity);
-                                    setState(() {
-                                      item.quantity -= 1;
-                                      item.subTotal =
-                                          item.quantity * item.book.price;
-                                    });
+                                    fetchCartDetails();
                                   } catch (e) {
+                                    fetchCartDetails();
                                     showErrorDialog(context, e.toString());
                                   }
                                 }
@@ -178,14 +173,10 @@ class _CarrelloState extends State<Carrello> {
                                   await Model.sharedInstance
                                       .updateItemQuantity(
                                       item.id, quantity);
-                                  setState(() {
-                                    item.quantity += 1;
-                                    item.subTotal =
-                                        item.quantity * item.book.price;
-                                  });
+                                  fetchCartDetails();
                                 } catch (e) {
-                                  showErrorDialog(
-                                      context, e.toString());
+                                  fetchCartDetails();
+                                  showErrorDialog(context, e.toString());
                                 }
                               },
                             ),
@@ -213,10 +204,9 @@ class _CarrelloState extends State<Carrello> {
                   if (cartDetails.isNotEmpty) {
                     try {
                       await Model.sharedInstance.clearCart();
-                      setState(() {
-                        cartDetails = [];
-                      });
+                      fetchCartDetails();
                     } catch (e) {
+                      fetchCartDetails();
                       showErrorDialog(context, e.toString());
                     }
                   } else {
@@ -250,15 +240,14 @@ class _CarrelloState extends State<Carrello> {
                   } else {
                     try {
                       await Model.sharedInstance.checkout();
-                      setState(() {
-                        cartDetails = [];
-                      });
+                      fetchCartDetails();
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Il tuo ordine è stato accettato'),
                         ),
                       );
                     } catch (e) {
+                      fetchCartDetails();
                       showErrorDialog(context, e.toString());
                     }
                   }
