@@ -337,7 +337,6 @@ class Model {
 
     try {
       final body = jsonEncode(cartDetails.map((detail) => detail.toJson()).toList());
-      print(body);
       final response = await http.post(
         url,
         headers: <String, String>{

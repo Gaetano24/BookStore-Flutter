@@ -239,9 +239,6 @@ class _CarrelloState extends State<Carrello> {
                     );
                   } else {
                     try {
-                      for(CartDetail cd in cartDetails) {
-                        print(cd);
-                      }
                       await Model.sharedInstance.checkout(cartDetails);
                       fetchCartDetails();
                       ScaffoldMessenger.of(context).showSnackBar(
