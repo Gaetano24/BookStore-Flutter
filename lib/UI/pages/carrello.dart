@@ -230,7 +230,7 @@ class _CarrelloState extends State<Carrello> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orangeAccent,
                 ),
-                onPressed: () async {
+                onPressed: ()  async {
                   if (cartDetails.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -239,7 +239,10 @@ class _CarrelloState extends State<Carrello> {
                     );
                   } else {
                     try {
-                      await Model.sharedInstance.checkout();
+                      for(CartDetail cd in cartDetails) {
+                        print(cd);
+                      }
+                      await Model.sharedInstance.checkout(cartDetails);
                       fetchCartDetails();
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

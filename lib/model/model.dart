@@ -332,22 +332,28 @@ class Model {
     }
   }
 
-  Future<void> checkout() async {
-    final url = Uri.parse(
-        "${Constants.addressStoreServer}/profile/cart/checkout");
+  Future<void> checkout(List<CartDetail> cartDetails) async {
+    final url = Uri.parse("${Constants.addressStoreServer}/profile/cart/checkout");
+
     try {
+      final body = jsonEncode(cartDetails.map((detail) => detail.toJson()).toList());
+      print(body);
       final response = await http.post(
         url,
         headers: <String, String>{
           'Authorization': 'Bearer $_token',
+          'Content-Type': 'application/json',
         },
+        body: body,
       );
-      if(response.statusCode != 201) {
+
+      if (response.statusCode != 201) {
         throw Exception(response.body);
       }
     } catch (e) {
       throw Exception(e);
     }
   }
+
 
 }

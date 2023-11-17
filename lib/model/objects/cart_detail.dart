@@ -35,4 +35,9 @@ class CartDetail {
     };
   }
 
+  @override
+  String toString() {
+    return 'CartDetail{id: $id, book: $book, price: $price, quantity: $quantity, subTotal: $subTotal}';
+  }
+
 }
